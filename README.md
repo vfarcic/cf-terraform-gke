@@ -108,6 +108,35 @@ gcloud projects delete $PROJECT_ID
 ```bash
 # Sign in
 
+# Create a project
+
+# Enter the project
+
+# Create a pipeline
+# Type *cf-terraform-gke* as the *pipeline name*
+# Select *cf-terraform-gke*  as the repository
+# Click the *CREATE* button
+
+# If the error *You have not added your Git integration* appears, click the *Click here* link and follow the instructions.
+# If the error *'registry' is required* appears, click the *Click here* link and follow the instructions.
+
+# Change *Inline YAML* to *Use YAML from Repository*
+# Click the *DONE* button
+# Click the *SAVE* button
+
+cat account.json
+
+# Copy the output
+
+# Click the *VARIABLES* tab
+# Click the *ADD VARIABLE* button
+# Type *ACCOUNT_JSON_CONTENT* as the *Key* and paste the JSON into the *Value* field
+# Click the *SAVE* button
+
+# TODO: Switch to secrets
+
+terraform refresh
+
 gcloud container clusters \
     get-credentials \
     $(terraform output cluster_name) \
