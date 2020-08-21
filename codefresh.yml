@@ -4,10 +4,10 @@ stages:
   - prepare
   - deploy
 steps:
-  clone:
+  main_clone:
     title: Cloning repository
     type: git-clone
-    repo: vfarcic/cf-terraform-gke
+    repo: "${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}"
     revision: "${{CF_BRANCH}}"
     stage: clone
   auth:
@@ -15,12 +15,12 @@ steps:
     title: Creating account.json
     stage: prepare
     commands:
-      - echo $ACCOUNT_JSON_CONTENT > /codefresh/volume/account.json
-      # - cf_export GOOGLE_CLOUD_KEYFILE_JSON=/codefresh/volume/account.json
+      - echo $ACCOUNT_JSON_CONTENT > account.json
   apply:
     image: hashicorp/terraform:0.13.0
     title: Deploying Terraform plan
     stage: deploy
     commands:
+      - ls -l
       - terraform init
       - terraform apply -auto-approve 
