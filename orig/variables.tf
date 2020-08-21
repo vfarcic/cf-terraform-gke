@@ -5,7 +5,7 @@ variable "region" {
 
 variable "project_id" {
   type    = string
-  default = "doc-20200821235336"
+  default = "CHANGE_PROJECT_ID"
 }
 
 variable "cluster_name" {
@@ -40,5 +40,5 @@ variable "billing_account_id" {
 
 variable "k8s_version" {
   type    = string
-  default = "1.16.13-gke.1"
+  default = "CHANGE_VERSION"
 }
