@@ -37,7 +37,7 @@ resource "google_container_node_pool" "primary_nodes" {
   count              = var.destroy == true ? 0 : 1
   name               = var.cluster_name
   location           = var.region
-  cluster            = google_container_cluster.primary.name
+  cluster            = google_container_cluster.primary[0].name
   version            = var.k8s_version
   initial_node_count = var.min_node_count
   node_config {

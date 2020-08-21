@@ -7,13 +7,17 @@ open https://github.com/vfarcic/cf-terraform-gke
 
 # Fork it
 
+export GH_USER=[...]
+
+git clone https://github.com/$GH_USER/cf-terraform-gke
+
 cd cf-terraform-gke
 
 cp orig/*.tf .
 
 gcloud auth login
 
-export PROJECT_ID=doc-$(date +%Y%m%d%H%M%S)
+export PROJECT_ID=doc-$(date +%Y%m%d%H%M%S) # e.g., doc-cf-project
 
 gcloud projects create $PROJECT_ID
 
@@ -36,7 +40,7 @@ open https://console.cloud.google.com/billing/linkedaccount?project=$PROJECT_ID
 
 # Link a billing account
 
-export BUCKET_NAME=doc-$(date +%Y%m%d%H%M%S)
+export BUCKET_NAME=doc-$(date +%Y%m%d%H%M%S) # e.g., doc-cf-bucket
 
 export REGION=us-east1
 
@@ -52,7 +56,8 @@ gcloud container get-server-config \
     --project $PROJECT_ID \
     --region $REGION
 
-# Select one of `validMasterVersions` values
+# Select one of `validMasterVersions` values.
+# Select any version except the newest
 
 export VERSION=[...]
 
@@ -82,6 +87,10 @@ git push
 terraform init
 
 terraform apply
+
+export KUBECONFIG=$PWD/kubeconfig
+
+kubectl get nodes
 ```
 
 ## Destroy Manually
@@ -89,7 +98,7 @@ terraform apply
 ```bash
 # TODO: Change variables
 
-terraform apply
+terraform apply --var destroy=true
 
 gcloud projects delete $PROJECT_ID
 ```
@@ -98,4 +107,12 @@ gcloud projects delete $PROJECT_ID
 
 ```bash
 # Sign in
+
+gcloud container clusters \
+    get-credentials \
+    $(terraform output cluster_name) \
+    --project \
+    $(terraform output project_id) \
+    --region \
+    $(terraform output region)
 ```
