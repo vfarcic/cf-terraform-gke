@@ -22,8 +22,5 @@ steps:
     title: Deploying Terraform plan
     stage: deploy
     commands:
-      - ls -l
-      - cat account.json
-      - cp /codefresh/volume/account.json .
       - terraform init
       - terraform apply -auto-approve 
