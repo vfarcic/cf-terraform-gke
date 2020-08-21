@@ -6,7 +6,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket      = "doc-20200821235719"
+    bucket      = "CHANGE_BUCKET"
     prefix      = "terraform/state"
     credentials = "account.json"
   }

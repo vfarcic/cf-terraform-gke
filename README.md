@@ -11,7 +11,7 @@ cd cf-terraform-gke
 
 cp orig/*.tf .
 
-gcloud auth application-default login
+gcloud auth login
 
 export PROJECT_ID=doc-$(date +%Y%m%d%H%M%S)
 
@@ -32,11 +32,13 @@ gcloud projects \
     --member serviceAccount:devops-catalog@$PROJECT_ID.iam.gserviceaccount.com \
     --role roles/owner
 
+open https://console.cloud.google.com/billing/linkedaccount?project=$PROJECT_ID
+
+# Link a billing account
+
 export BUCKET_NAME=doc-$(date +%Y%m%d%H%M%S)
 
 export REGION=us-east1
-
-open https://console.cloud.google.com/billing/linkedaccount?project=$PROJECT_ID
 
 gsutil mb \
     -p $PROJECT_ID \
@@ -47,7 +49,10 @@ gsutil mb \
 cat variables.tf
 
 gcloud container get-server-config \
+    --project $PROJECT_ID \
     --region $REGION
+
+# Select one of `validMasterVersions` values
 
 export VERSION=[...]
 
