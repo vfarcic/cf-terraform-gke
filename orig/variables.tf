@@ -42,3 +42,8 @@ variable "k8s_version" {
   type    = string
   default = "CHANGE_VERSION"
 }
+
+variable "destroy" {
+  type    = bool
+  default = false
+}

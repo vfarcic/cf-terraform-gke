@@ -21,6 +21,7 @@ resource "google_project_service" "cloud" {
 }
 
 resource "google_container_cluster" "primary" {
+  count                    = var.destroy == true ? 0 : 1
   name                     = var.cluster_name
   location                 = var.region
   min_master_version       = var.k8s_version
@@ -33,6 +34,7 @@ resource "google_container_cluster" "primary" {
 }
 
 resource "google_container_node_pool" "primary_nodes" {
+  count              = var.destroy == true ? 0 : 1
   name               = var.cluster_name
   location           = var.region
   cluster            = google_container_cluster.primary.name
@@ -59,6 +61,7 @@ resource "google_container_node_pool" "primary_nodes" {
 }
 
 resource "null_resource" "kubeconfig" {
+  count = var.destroy == true ? 0 : 1
   provisioner "local-exec" {
     command = "KUBECONFIG=$PWD/kubeconfig gcloud container clusters get-credentials ${var.cluster_name} --project ${var.project_id} --region ${var.region}"
   }
@@ -75,6 +78,7 @@ resource "null_resource" "destroy-kubeconfig" {
 }
 
 resource "null_resource" "ingress-nginx" {
+  count = var.destroy == true ? 0 : 1
   provisioner "local-exec" {
     command = "KUBECONFIG=$PWD/kubeconfig kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml"
   }
