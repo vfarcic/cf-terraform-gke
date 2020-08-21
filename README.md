@@ -96,8 +96,6 @@ kubectl get nodes
 ## Destroy Manually
 
 ```bash
-# TODO: Change variables
-
 terraform apply --var destroy=true
 
 gcloud projects delete $PROJECT_ID
@@ -106,6 +104,10 @@ gcloud projects delete $PROJECT_ID
 ## Creating With CodeFresh
 
 ```bash
+TODO: Create an image with `terraform`, `gcloud`, and `kubectl`
+
+cat codefresh.yml
+
 # Sign in
 
 # Create a project
@@ -118,7 +120,6 @@ gcloud projects delete $PROJECT_ID
 # Click the *CREATE* button
 
 # If the error *You have not added your Git integration* appears, click the *Click here* link and follow the instructions.
-# If the error *'registry' is required* appears, click the *Click here* link and follow the instructions.
 
 # Change *Inline YAML* to *Use YAML from Repository*
 # Click the *DONE* button
@@ -134,6 +135,16 @@ cat account.json
 # Click the *SAVE* button
 
 # TODO: Switch to secrets
+
+# Click the *RUN* button
+
+# TODO: Triggers
+
+# TODO: PRs with `terraform init && terraform plan`
+
+# TODO: Merge to master and observe the pipeline
+
+# TODO: Change `destroy` to `true`, push the changes, and observe the pipeline
 
 terraform refresh
 
