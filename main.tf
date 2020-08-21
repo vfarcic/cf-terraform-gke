@@ -16,6 +16,10 @@ resource "google_project_service" "container" {
   service = "container.googleapis.com"
 }
 
+resource "google_project_service" "cloud" {
+  service = "cloudresourcemanager.googleapis.com"
+}
+
 resource "google_container_cluster" "primary" {
   name                     = var.cluster_name
   location                 = var.region
@@ -23,7 +27,8 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = 1
   depends_on = [
-    google_project_service.container
+    google_project_service.container,
+    google_project_service.cloud,
   ]
 }
 

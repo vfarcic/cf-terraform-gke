@@ -1,0 +1,26 @@
+version: "1.0"
+stages:
+  - clone
+  - prepare
+  - deploy
+steps:
+  clone:
+    title: Cloning repository
+    type: git-clone
+    repo: vfarcic/cf-terraform-gke
+    revision: "${{CF_BRANCH}}"
+    stage: clone
+  auth:
+    image: alpine:3.12
+    title: Creating account.json
+    stage: prepare
+    commands:
+      - echo $ACCOUNT_JSON_CONTENT > /codefresh/volume/account.json
+      # - cf_export GOOGLE_CLOUD_KEYFILE_JSON=/codefresh/volume/account.json
+  apply:
+    image: hashicorp/terraform:0.12.0
+    title: Deploying Terraform plan
+    stage: deploy
+    commands:
+      - terraform init
+      - terraform apply -auto-approve 
