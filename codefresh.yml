@@ -22,4 +22,5 @@ steps:
     stage: deploy
     commands:
       - terraform init
-      - terraform apply -auto-approve 
+      - terraform refresh
+      - terraform apply
