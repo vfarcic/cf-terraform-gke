@@ -152,7 +152,20 @@ gcloud container clusters \
 
 kubectl get nodes
 
-# TODO: Triggers
+# Click the *TRIGGERS* tab
+
+# Click the edit button of the only trigger
+# Change the *TRIGGER NAME* to *master*
+# Change *BRANCH (REGEX EXPRESSION)* to */master/gi*
+# Click the *UPDATE* button
+
+# Click the *+ ADD TRIGGER* button
+# Choose *GIT*
+# Click the *NEXT* button
+# Type *pr-to-master* as the *TRIGGER NAME*
+# Select *cf-terraform-gke* as the *REPOSITORY*
+# Type */master/gi* as the *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)*
+# Click the *NEXT* button
 
 # TODO: PRs with `terraform init && terraform plan`
 
