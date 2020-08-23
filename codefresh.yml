@@ -15,10 +15,25 @@ steps:
     stage: prepare
     commands:
       - echo $ACCOUNT_JSON_CONTENT > account.json
-  create:
+  init:
     image: hashicorp/terraform:0.13.0
     title: Deploying Terraform plan
     stage: apply
     commands:
       - terraform init
+  plan:
+    image: hashicorp/terraform:0.13.0
+    title: Deploying Terraform plan
+    stage: apply
+    commands:
+      - terraform plan
+  apply:
+    image: hashicorp/terraform:0.13.0
+    title: Deploying Terraform plan
+    stage: apply
+    commands:
       - terraform apply -auto-approve 
+    when:
+      branch:
+        only:
+          - master

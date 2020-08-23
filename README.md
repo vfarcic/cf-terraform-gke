@@ -152,7 +152,18 @@ gcloud container clusters \
 
 kubectl get nodes
 
-# TODO: Triggers
+# Click the *TRIGGERS* tab
+
+# Click the edit button of the only trigger
+# Select the *TRIGGER BY* option *Pull request opened*
+# Select the *TRIGGER BY* option *Pull request synchronized*
+# Change *BRANCH (REGEX EXPRESSION)* to */master/gi*
+# Change *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)* to */master/gi*
+# Click the *UPDATE* button
+
+open https://github.com/$GH_USER/cf-terraform-gke
+
+# Create a PR
 
 # TODO: PRs with `terraform init && terraform plan`
 
@@ -167,7 +178,8 @@ git add .
 
 git commit -m "Destroying everything"
 
-git push
+git push \
+    --set-upstream origin new-version
 ```
 
 ## Destroy With CodeFresh
@@ -181,3 +193,7 @@ git commit -m "Destroy everything"
 
 git push
 ```
+
+## Questions
+
+* How to delete a trigger?
