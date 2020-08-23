@@ -155,24 +155,21 @@ kubectl get nodes
 # Click the *TRIGGERS* tab
 
 # Click the edit button of the only trigger
-# Select the *TRIGGER BY* option *Pull request opened*
-# Select the *TRIGGER BY* option *Pull request synchronized*
 # Change *BRANCH (REGEX EXPRESSION)* to */master/gi*
-# Change *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)* to */master/gi*
 # Click the *UPDATE* button
 
-open https://github.com/$GH_USER/cf-terraform-gke
+# Click the *ADD TRIGGER* button
+# Change the *TRIGGER NAME* to *pr*
+# Unselect the *TRIGGER BY* option *Push commits*
+# Select the *TRIGGER BY* option *Pull request opened*
+# Select the *TRIGGER BY* option *Pull request synchronized*
+# Change *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)* to */master/gi*
+# Click the *NEXT* button
 
-# Create a PR
+git checkout -b destroy
 
-# TODO: PRs with `terraform init && terraform plan`
-
-# TODO: Comment back the results to the PR
-
-# TODO: Merge to master and observe the pipeline
-
-# TODO: Do it through a PR.
-# Change `destroy` to `true`.
+# Open *variables.tf* in your favorite editor
+# Modify the value of *destroy* to *true* and save the changes
 
 git add .
 
@@ -180,20 +177,24 @@ git commit -m "Destroying everything"
 
 git push \
     --set-upstream origin new-version
+
+# Observe that a pipeline was NOT triggered
+
+open https://github.com/$GH_USER/cf-terraform-gke
+
+# Create a PR
+
+# Observe that the pipeline was triggered
+
+# Merge the PR to the master
+
+# Observe that the cluster was destroyed
 ```
 
-## Destroy With CodeFresh
+## Next
 
-```bash
-# Change the `default` value of the variable `destroy` in `variables.tf` to `true`
+### ChatOps
 
-git add .
-
-git commit -m "Destroy everything"
-
-git push
-```
-
-## Questions
-
-* How to delete a trigger?
+* Report the output of `terraform plan` back to the PR
+* Assign a PR for review
+* Merge to master through comments
