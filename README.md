@@ -161,6 +161,10 @@ kubectl get nodes
 # Change *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)* to */master/gi*
 # Click the *UPDATE* button
 
+open https://github.com/$GH_USER/cf-terraform-gke
+
+# Create a PR
+
 # TODO: PRs with `terraform init && terraform plan`
 
 # TODO: Comment back the results to the PR
