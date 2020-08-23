@@ -104,11 +104,9 @@ gcloud projects delete $PROJECT_ID
 ## Creating With CodeFresh
 
 ```bash
-TODO: Create an image with `terraform`, `gcloud`, and `kubectl`
-
 cat codefresh.yml
 
-# Sign in
+# Sign up or sign in
 
 # Create a project
 
@@ -138,14 +136,6 @@ cat account.json
 
 # Click the *RUN* button
 
-# TODO: Triggers
-
-# TODO: PRs with `terraform init && terraform plan`
-
-# TODO: Merge to master and observe the pipeline
-
-# TODO: Change `destroy` to `true`, push the changes, and observe the pipeline
-
 terraform refresh
 
 gcloud container clusters \
@@ -155,4 +145,28 @@ gcloud container clusters \
     $(terraform output project_id) \
     --region \
     $(terraform output region)
+
+kubectl get nodes
+
+# TODO: Triggers
+
+# TODO: PRs with `terraform init && terraform plan`
+
+# TODO: Comment back the results to the PR
+
+# TODO: Merge to master and observe the pipeline
+
+# TODO: Change `destroy` to `true`, push the changes, and observe the pipeline. Do it through a PR.
+```
+
+## Destroy With CodeFresh
+
+```bash
+# Change the `default` value of the variable `destroy` in `variables.tf` to `true`
+
+git add .
+
+git commit -m "Destroy everything"
+
+git push
 ```

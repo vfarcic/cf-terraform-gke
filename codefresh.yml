@@ -1,15 +1,14 @@
 version: "1.0"
 stages:
-  - clone
   - prepare
-  - deploy
+  - apply
 steps:
   main_clone:
     title: Cloning repository
     type: git-clone
     repo: "${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}"
     revision: "${{CF_BRANCH}}"
-    stage: clone
+    stage: prepare
   auth:
     image: alpine:3.12
     title: Creating account.json
@@ -19,8 +18,7 @@ steps:
   create:
     image: hashicorp/terraform:0.13.0
     title: Deploying Terraform plan
-    stage: deploy
+    stage: apply
     commands:
       - terraform init
-      - terraform refresh
-      - terraform apply
+      - terraform apply -auto-approve 
