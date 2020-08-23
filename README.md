@@ -1,5 +1,10 @@
 # Google Cloud Kubernetes Engine (GKE) Cluster With Terraform And CodeFresh
 
+## Pre-Work
+
+* Infrastructure as Code, GitOps, CI/CD
+* CodeFresh pipelines for PRs
+
 ## Preparing
 
 ```bash
@@ -130,9 +135,8 @@ cat account.json
 # Click the *VARIABLES* tab
 # Click the *ADD VARIABLE* button
 # Type *ACCOUNT_JSON_CONTENT* as the *Key* and paste the JSON into the *Value* field
+# Click the *Encrypt* button
 # Click the *SAVE* button
-
-# TODO: Switch to secrets
 
 # Click the *RUN* button
 
@@ -156,7 +160,14 @@ kubectl get nodes
 
 # TODO: Merge to master and observe the pipeline
 
-# TODO: Change `destroy` to `true`, push the changes, and observe the pipeline. Do it through a PR.
+# TODO: Do it through a PR.
+# Change `destroy` to `true`.
+
+git add .
+
+git commit -m "Destroying everything"
+
+git push
 ```
 
 ## Destroy With CodeFresh
