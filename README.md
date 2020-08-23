@@ -155,7 +155,10 @@ kubectl get nodes
 # Click the *TRIGGERS* tab
 
 # Click the edit button of the only trigger
+# Select the *TRIGGER BY* option *Pull request opened*
+# Select the *TRIGGER BY* option *Pull request synchronized*
 # Change *BRANCH (REGEX EXPRESSION)* to */master/gi*
+# Change *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)* to */master/gi*
 # Click the *UPDATE* button
 
 # TODO: PRs with `terraform init && terraform plan`
