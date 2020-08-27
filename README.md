@@ -87,46 +87,7 @@ git commit -m "Initial commit"
 git push
 ```
 
-## Creating Manually
-
-```bash
-# terraform init
-
-# terraform apply
-```
-
-```
-...
-Plan: 5 to add, 0 to change, 0 to destroy.
-
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes
-...
-Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
-
-Outputs:
-
-cluster_name = devops-catalog
-project_id = doc-cf-project
-region = us-east1
-```
-
-```bash
-# export KUBECONFIG=$PWD/kubeconfig
-
-# kubectl get nodes
-```
-
-## Destroy Manually
-
-```bash
-# terraform destroy
-```
-
-## Creating With CodeFresh
+## Managing GKE With CodeFresh
 
 ```bash
 cat codefresh.yml
@@ -234,19 +195,67 @@ cat account.json
 
 ```bash
 # Click the *SAVE* button
-```
 
-![](img/cf-run-dialog.png)
-
-```bash
 # Click the *RUN* button
 
 # Select any of the steps to observe or follow the logs
+```
 
+![](img/TODO:)
+
+```bash
 terraform init
+```
 
+```
+Initializing the backend...
+
+Successfully configured the backend "gcs"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Finding latest version of hashicorp/google...
+- Installing hashicorp/google v3.36.0...
+- Installed hashicorp/google v3.36.0 (signed by HashiCorp)
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, we recommend adding version constraints in a required_providers block
+in your configuration, with the constraint strings suggested below.
+
+* hashicorp/google: version = "~> 3.36.0"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+
+```bash
 terraform refresh
+```
 
+```
+google_project_service.cloud: Refreshing state... [id=doc-cf-project/cloudresourcemanager.googleapis.com]
+google_project_service.container: Refreshing state... [id=doc-cf-project/container.googleapis.com]
+google_container_cluster.primary[0]: Refreshing state... [id=projects/doc-cf-project/locations/us-east1/clusters/devops-catalog]
+google_container_node_pool.primary_nodes[0]: Refreshing state... [id=projects/doc-cf-project/locations/us-east1/clusters/devops-catalog/nodePools/devops-catalog]
+
+Outputs:
+
+cluster_name = devops-catalog
+project_id = doc-cf-project
+region = us-east1
+```
+
+```bash
 gcloud container clusters \
     get-credentials \
     $(terraform output cluster_name) \
@@ -257,6 +266,8 @@ gcloud container clusters \
 
 kubectl get nodes
 
+# Click the *cf-terraform-gke* link from breadcrumbs in to top part of the screen
+
 # Click the *TRIGGERS* tab
 
 # Click the edit button of the only trigger
@@ -264,17 +275,42 @@ kubectl get nodes
 # Click the *UPDATE* button
 
 # Click the *ADD TRIGGER* button
+
+# Click the *+ ADD TRIGGER* button
+
+# Select *GIT* as the type
+```
+
+![](img/cf-trigger-type.png)
+
+```bash
+# Click the *NEXT* button
+
 # Change the *TRIGGER NAME* to *pr*
+# Select the *cf-terraform-gke* repo
 # Unselect the *TRIGGER BY* option *Push commits*
 # Select the *TRIGGER BY* option *Pull request opened*
 # Select the *TRIGGER BY* option *Pull request synchronized*
 # Change *PULL REQUEST TARGET BRANCH (REGEX EXPRESSION)* to */master/gi*
+```
+
+![](img/cf-add-trigger.png)
+
+```bash
 # Click the *NEXT* button
+
+# Click the *DONE* button
+```
+
+![](img/cf-triggers.png)
+
+```bash
+# Click the *X* button to close the dialog
 
 git checkout -b destroy
 
 # Open *variables.tf* in your favorite editor
-# Modify the value of *destroy* to *true* and save the changes
+# Modify the value of the *destroy* variable to *true* and save the changes
 
 git add .
 
