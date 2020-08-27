@@ -264,6 +264,8 @@ gcloud container clusters \
     --region \
     $(terraform output region)
 
+export KUBECONFIG=$PWD/kubeconfig
+
 kubectl get nodes
 
 # Click the *cf-terraform-gke* link from breadcrumbs in to top part of the screen
@@ -317,8 +319,8 @@ git add .
 git commit -m "Destroying everything"
 
 git push \
-    --set-upstream origin new-version
-
+    --set-upstream origin destroy
+    
 # Observe that a pipeline was NOT triggered
 
 open https://github.com/$GH_USER/cf-terraform-gke
@@ -327,9 +329,21 @@ open https://github.com/$GH_USER/cf-terraform-gke
 
 # Observe that the pipeline was triggered
 
+# Observe that the output of the *Outputting Terraform plan* step
+
+# Observe that the *Applying Terraform* step was skipped
+```
+
+![](img/cf-pr-build.png)
+
+```bash
 # Merge the PR to the master
 
-# Observe that the cluster was destroyed
+git checkout master
+
+# Observe that the pipeline was triggered
+
+# Go to Google Cloud Console to confirm that the cluster is gone
 ```
 
 ## Destroy
