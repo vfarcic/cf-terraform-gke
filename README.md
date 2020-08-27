@@ -3,11 +3,12 @@
 ## Pre-Work
 
 * Infrastructure as Code, GitOps, CI/CD
-* CodeFresh pipelines for PRs
 
 ## Preparing
 
 ```bash
+# TODO: Test in WSL
+
 open https://github.com/vfarcic/cf-terraform-gke
 
 # Fork it
@@ -65,7 +66,7 @@ gcloud container get-server-config \
 # Select any version except the newest
 
 export VERSION=[...]
-
+xxx
 cat variables.tf \
     | sed -e "s@CHANGE_PROJECT_ID@$PROJECT_ID@g" \
     | sed -e "s@CHANGE_VERSION@$VERSION@g" \

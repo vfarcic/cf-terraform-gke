@@ -1,4 +1,3 @@
-
 variable "region" {
   type    = string
   default = "us-east1"
@@ -41,10 +40,10 @@ variable "billing_account_id" {
 
 variable "k8s_version" {
   type    = string
-  default = "1.15.12-gke.16"
+  default = "1.16.13-gke.1"
 }
 
 variable "destroy" {
   type    = bool
-  default = true
+  default = false
 }
