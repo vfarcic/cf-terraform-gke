@@ -6,7 +6,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket      = "CHANGE_BUCKET"
+    bucket      = "doc-20200902135352"
     prefix      = "terraform/state"
     credentials = "account.json"
   }
@@ -60,29 +60,3 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
-resource "null_resource" "kubeconfig" {
-  count = var.destroy == true ? 0 : 1
-  provisioner "local-exec" {
-    command = "KUBECONFIG=$PWD/kubeconfig gcloud container clusters get-credentials ${var.cluster_name} --project ${var.project_id} --region ${var.region}"
-  }
-  depends_on = [
-    google_container_cluster.primary,
-  ]
-}
-
-resource "null_resource" "destroy-kubeconfig" {
-  provisioner "local-exec" {
-    when    = destroy
-    command = "rm -f $PWD/kubeconfig"
-  }
-}
-
-resource "null_resource" "ingress-nginx" {
-  count = var.destroy == true ? 0 : 1
-  provisioner "local-exec" {
-    command = "KUBECONFIG=$PWD/kubeconfig kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml"
-  }
-  depends_on = [
-    null_resource.kubeconfig,
-  ]
-}

@@ -5,7 +5,7 @@ variable "region" {
 
 variable "project_id" {
   type    = string
-  default = "CHANGE_PROJECT_ID"
+  default = "codefresh-sa"
 }
 
 variable "cluster_name" {
@@ -40,7 +40,7 @@ variable "billing_account_id" {
 
 variable "k8s_version" {
   type    = string
-  default = "CHANGE_VERSION"
+  default = "1.16.13-gke.1"
 }
 
 variable "destroy" {
