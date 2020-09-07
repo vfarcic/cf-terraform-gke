@@ -1,6 +1,6 @@
 /.terraform
 /*.tfstate*
 /kubeconfig
-/account.json
+/account.json*
 /tmp
 /env
