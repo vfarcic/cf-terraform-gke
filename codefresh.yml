@@ -2,6 +2,7 @@ version: "1.0"
 stages:
   - prepare
   - apply
+  - install
 steps:
   main_clone:
     title: Cloning repository
@@ -37,3 +38,14 @@ steps:
       branch:
         only:
           - master
+  config:
+    image: hashicorp/terraform:0.13.0
+    title: Creating Kube Config
+    stage: install
+    commands:
+      - cf_export CLUSTER_NAME=$(terraform output cluster_name)
+      - cf_export PROJECT=$(terraform output project_id)
+      - cf_export REGION=$(terraform output region)
+      - cf_export KUBECONFIG=$PWD/kubeconfig
+      - echo $KUBECONFIG
+      - echo "gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT --region $REGION"
