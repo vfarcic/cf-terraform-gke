@@ -47,7 +47,7 @@ steps:
       - export PROJECT_ID=$(terraform output project_id)
       - export REGION=$(terraform output region)
       - export KUBECONFIG=$PWD/kubeconfig
-      - cf_export CLUSTER_NAME PROJECT REGION KUBECONFIG
+      - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
       - echo $KUBECONFIG
   creds:
     image: google/cloud-sdk:308.0.0
