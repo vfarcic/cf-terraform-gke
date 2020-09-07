@@ -48,11 +48,11 @@ steps:
       - export REGION=$(terraform output region)
       - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
-      - echo $KUBECONFIG
   creds:
     image: google/cloud-sdk:308.0.0
     title: Retrieving credentials
     stage: install
     commands:
       - gcloud auth activate-service-account --key-file=account.json
-      - echo gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
+      - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
+      - kubectl get nodes
