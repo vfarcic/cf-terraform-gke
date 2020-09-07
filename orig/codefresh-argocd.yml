@@ -55,4 +55,4 @@ steps:
     stage: install
     commands:
       - gcloud auth activate-service-account --key-file=account.json
-      - echo gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
+      - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
