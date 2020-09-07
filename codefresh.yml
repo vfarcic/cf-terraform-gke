@@ -54,5 +54,5 @@ steps:
     title: Retrieving credentials
     stage: install
     commands:
-      - gcloud auth activate-service-account devops-catalog@${PROJECT_ID}.iam.gserviceaccount.com --key-file=account.json
+      - gcloud auth activate-service-account --key-file=account.json
       - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
