@@ -55,7 +55,7 @@ steps:
     commands:
       - gcloud auth activate-service-account --key-file=account.json
       - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
-  apply:
+  apply-app:
     image: dtzar/helm-kubectl:3.3.1
     title: Applying ArgoCD
     stage: apps
