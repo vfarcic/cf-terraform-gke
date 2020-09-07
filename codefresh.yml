@@ -48,18 +48,12 @@ steps:
       - export REGION=$(terraform output region)
       - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
-  creds:
+      apply-app:
     image: vfarcic/gke-helm-kubectl:308.0.0
     title: Retrieving credentials
     stage: apps
     commands:
       - gcloud auth activate-service-account --key-file=account.json
       - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
-      # - kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
-  apply-app:
-    image: vfarcic/gke-helm-kubectl:308.0.0
-    title: Applying ArgoCD
-    stage: apps
-    commands:
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
       - helm upgrade --install argocd argo/argo-cd --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
