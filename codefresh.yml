@@ -38,14 +38,21 @@ steps:
       branch:
         only:
           - master
-  config:
+  vars:
     image: hashicorp/terraform:0.13.0
-    title: Creating Kube Config
+    title: Creating variables
     stage: install
     commands:
-      - cf_export CLUSTER_NAME=$(terraform output cluster_name)
-      - cf_export PROJECT=$(terraform output project_id)
-      - cf_export REGION=$(terraform output region)
-      - cf_export KUBECONFIG=$PWD/kubeconfig
+      - export CLUSTER_NAME=$(terraform output cluster_name)
+      - export PROJECT=$(terraform output project_id)
+      - export REGION=$(terraform output region)
+      - export KUBECONFIG=$PWD/kubeconfig
+      - cf_export CLUSTER_NAME PROJECT REGION KUBECONFIG
       - echo $KUBECONFIG
       - echo "gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT --region $REGION"
+  # vars:
+  #   image: TODO:
+  #   title: Creating Kube Config
+  #   stage: install
+  #   commands:
+  #     - gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT --region $REGION
