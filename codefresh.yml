@@ -2,7 +2,7 @@ version: "1.0"
 stages:
   - prepare
   - apply
-  - install
+  - apps
 steps:
   main_clone:
     title: Cloning repository
@@ -41,7 +41,7 @@ steps:
   vars:
     image: hashicorp/terraform:0.13.0
     title: Creating variables
-    stage: install
+    stage: apps
     commands:
       - export CLUSTER_NAME=$(terraform output cluster_name)
       - export PROJECT_ID=$(terraform output project_id)
@@ -51,8 +51,14 @@ steps:
   creds:
     image: google/cloud-sdk:308.0.0
     title: Retrieving credentials
-    stage: install
+    stage: apps
     commands:
       - gcloud auth activate-service-account --key-file=account.json
       - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
-      - kubectl get nodes
+  apply:
+    image: dtzar/helm-kubectl:3.3.1
+    title: Applying ArgoCD
+    stage: apps
+    commands:
+      - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
+      - helm upgrade --install argocd argo/argo-cd --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
