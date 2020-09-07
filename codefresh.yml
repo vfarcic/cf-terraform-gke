@@ -50,10 +50,10 @@ steps:
       - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
   apply-app:
     image: vfarcic/gke-helm-kubectl:308.0.0
-    title: Retrieving credentials
+    title: Applying apps
     stage: apps
     commands:
       - gcloud auth activate-service-account --key-file=account.json
       - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
-      - helm upgrade --install argocd argo/argo-cd --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
+      - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
