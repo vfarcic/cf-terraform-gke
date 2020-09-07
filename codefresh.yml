@@ -49,10 +49,10 @@ steps:
       - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT REGION KUBECONFIG
       - echo $KUBECONFIG
-  # vars:
-  #   image: google/cloud-sdk:308.0.0
-  #   title: Creating Kube Config
-  #   stage: install
-  #   commands:
-  #     - gcloud auth activate-service-account devops-catalog@$PROJECT_ID.iam.gserviceaccount.com --key-file=account.json
-# - gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT_ID --region $REGION
+  creds:
+    image: google/cloud-sdk:308.0.0
+    title: Retrieving credentials
+    stage: install
+    commands:
+      - gcloud auth activate-service-account devops-catalog@$PROJECT_ID.iam.gserviceaccount.com --key-file=account.json
+      - gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT_ID --region $REGION
