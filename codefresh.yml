@@ -21,6 +21,7 @@ steps:
     title: Initializing Terraform
     stage: apply
     commands:
+      - cat account.json
       - terraform init
   plan:
     image: hashicorp/terraform:0.13.0
