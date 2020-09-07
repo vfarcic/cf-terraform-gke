@@ -44,15 +44,15 @@ steps:
     stage: install
     commands:
       - export CLUSTER_NAME=$(terraform output cluster_name)
-      - export PROJECT=$(terraform output project_id)
+      - export PROJECT_ID=$(terraform output project_id)
       - export REGION=$(terraform output region)
       - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT REGION KUBECONFIG
       - echo $KUBECONFIG
-      - echo "gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT --region $REGION"
-  # vars:
-  #   image: TODO:
-  #   title: Creating Kube Config
-  #   stage: install
-  #   commands:
-  #     - gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT --region $REGION
+  vars:
+    image: google/cloud-sdk:308.0.0
+    title: Creating Kube Config
+    stage: install
+    commands:
+      - gcloud auth activate-service-account devops-catalog@$$PROJECT_ID.iam.gserviceaccount.com --key-file=account.json
+      # - gcloud container clusters get-credentials $CLUSTER_NAME --project $PROJECT_ID --region $REGION
