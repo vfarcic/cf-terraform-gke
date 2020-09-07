@@ -48,7 +48,7 @@ steps:
       - export REGION=$(terraform output region)
       - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
-      apply-app:
+  apply-app:
     image: vfarcic/gke-helm-kubectl:308.0.0
     title: Retrieving credentials
     stage: apps
