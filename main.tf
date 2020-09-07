@@ -6,7 +6,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket      = "doc-codefresh"
+    bucket      = "doc-20200907193255"
     prefix      = "terraform/state"
     credentials = "account.json"
   }

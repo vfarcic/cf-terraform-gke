@@ -5,7 +5,7 @@ variable "region" {
 
 variable "project_id" {
   type    = string
-  default = "doc-codefresh"
+  default = "doc-20200907193103"
 }
 
 variable "cluster_name" {
