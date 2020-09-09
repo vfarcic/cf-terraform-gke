@@ -48,6 +48,10 @@ steps:
       - export REGION=$(terraform output region)
       - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
+    when:
+      branch:
+        only:
+          - master
   apply-app:
     image: vfarcic/gke-helm-kubectl:308.0.0
     title: Applying apps
@@ -57,3 +61,7 @@ steps:
       - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
       - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
+    when:
+      branch:
+        only:
+          - master
