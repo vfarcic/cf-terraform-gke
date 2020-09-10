@@ -6,7 +6,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket      = "doc-20200907193255"
+    bucket      = "doc-20200910120339"
     prefix      = "terraform/state"
     credentials = "account.json"
   }
@@ -59,4 +59,3 @@ resource "google_container_node_pool" "primary_nodes" {
     update = "1h"
   }
 }
-

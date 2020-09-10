@@ -5,7 +5,7 @@ variable "region" {
 
 variable "project_id" {
   type    = string
-  default = "doc-20200907193103"
+  default = "doc-20200910120159"
 }
 
 variable "cluster_name" {
@@ -40,10 +40,10 @@ variable "billing_account_id" {
 
 variable "k8s_version" {
   type    = string
-  default = "1.16.13-gke.1"
+  default = "1.16.13-gke.400"
 }
 
 variable "destroy" {
   type    = bool
-  default = true
+  default = false
 }
