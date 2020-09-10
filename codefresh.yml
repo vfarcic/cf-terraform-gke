@@ -43,8 +43,9 @@ steps:
     title: Applying apps
     stage: apps
     commands:
-      - gcloud auth activate-service-account --key-file=account.json
-      - gcloud container clusters get-credentials ${CLUSTER_NAME} --project ${PROJECT_ID} --region ${REGION}
+      - ./get-kubeconfig.sh
+      - export GOOGLE_APPLICATION_CREDENTIALS=account.json
+      - export KUBECONFIG=kubeconfig.yaml
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
       - sleep 5
       - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
