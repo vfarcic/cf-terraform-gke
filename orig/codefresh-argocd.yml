@@ -32,7 +32,7 @@ steps:
       - export CLUSTER_NAME=$(terraform output cluster_name)
       - export PROJECT_ID=$(terraform output project_id)
       - export REGION=$(terraform output region)
-      - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
+      - cf_export CLUSTER_NAME PROJECT_ID REGION
     when:
       branch:
         only:
@@ -47,7 +47,7 @@ steps:
       - export GOOGLE_APPLICATION_CREDENTIALS=$PWD/account.json
       - export KUBECONFIG=kubeconfig.yaml
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
-      - sleep 5
+      - sleep 1
       - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
     when:
       branch:
