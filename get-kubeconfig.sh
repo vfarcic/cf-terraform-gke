@@ -1,7 +1,9 @@
-GET_CMD="gcloud container clusters \
-    describe $(terraform output cluster_name) \
-    --region $(terraform output region) \
-    --project $(terraform output project_id)"
+if [ "$1" == "" ]; then
+  echo "Usage: $0 [CLUSTER_NAME] [REGION] [PROJECT_ID]"
+  exit
+fi
+
+GET_CMD="gcloud container clusters describe $1 --region $2 --project $3"
 
 echo "apiVersion: v1
 kind: Config
