@@ -43,7 +43,7 @@ steps:
     title: Applying apps
     stage: apps
     commands:
-      - ./get-kubeconfig.sh
+      - chmod +x get-kubeconfig.sh && ./get-kubeconfig.sh
       - export GOOGLE_APPLICATION_CREDENTIALS=account.json
       - export KUBECONFIG=kubeconfig.yaml
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
