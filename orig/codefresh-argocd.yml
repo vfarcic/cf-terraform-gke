@@ -32,7 +32,6 @@ steps:
       - export CLUSTER_NAME=$(terraform output cluster_name)
       - export PROJECT_ID=$(terraform output project_id)
       - export REGION=$(terraform output region)
-      - export KUBECONFIG=$PWD/kubeconfig
       - cf_export CLUSTER_NAME PROJECT_ID REGION KUBECONFIG
     when:
       branch:
@@ -43,6 +42,7 @@ steps:
     title: Applying apps
     stage: apps
     commands:
+      - gcloud auth activate-service-account --key-file account.json
       - chmod +x get-kubeconfig.sh && ./get-kubeconfig.sh $CLUSTER_NAME $REGION $PROJECT_ID
       - export GOOGLE_APPLICATION_CREDENTIALS=$PWD/account.json
       - export KUBECONFIG=kubeconfig.yaml
