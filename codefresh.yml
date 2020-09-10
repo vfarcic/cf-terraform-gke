@@ -38,7 +38,7 @@ steps:
       branch:
         only:
           - master
-  apply-app:
+  apply_app:
     image: vfarcic/gke-helm-kubectl:308.0.0
     title: Applying apps
     stage: apps
