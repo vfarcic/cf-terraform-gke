@@ -31,13 +31,6 @@ resource "google_container_cluster" "primary" {
     google_project_service.container,
     google_project_service.cloud,
   ]
-  master_auth {
-    username = "admin"
-    password = "admin"
-    client_certificate_config {
-      issue_client_certificate = false
-    }
-  }
 }
 
 resource "google_container_node_pool" "primary_nodes" {
