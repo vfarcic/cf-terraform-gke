@@ -31,7 +31,7 @@ resource "google_container_cluster" "primary" {
     google_project_service.container,
     google_project_service.cloud,
   ]
-  master_auth = {
+  master_auth {
     username = ""
     password = ""
   }
