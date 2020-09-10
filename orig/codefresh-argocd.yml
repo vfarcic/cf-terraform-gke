@@ -22,11 +22,6 @@ steps:
     stage: apply
     commands:
       - terraform init
-  plan:
-    image: hashicorp/terraform:0.13.0
-    title: Outputting Terraform plan
-    stage: apply
-    commands:
       - terraform plan
   apply:
     image: hashicorp/terraform:0.13.0
@@ -34,15 +29,6 @@ steps:
     stage: apply
     commands:
       - terraform apply -auto-approve 
-    when:
-      branch:
-        only:
-          - master
-  vars:
-    image: hashicorp/terraform:0.13.0
-    title: Creating variables
-    stage: apps
-    commands:
       - export CLUSTER_NAME=$(terraform output cluster_name)
       - export PROJECT_ID=$(terraform output project_id)
       - export REGION=$(terraform output region)
