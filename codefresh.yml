@@ -38,20 +38,6 @@ steps:
       branch:
         only:
           - master
-  destroy_app:
-    image: vfarcic/gke-helm-kubectl:308.0.0
-    title: Destroying apps
-    stage: apps
-    commands:
-      - gcloud auth activate-service-account --key-file account.json
-      - chmod +x get-kubeconfig.sh && ./get-kubeconfig.sh $CLUSTER_NAME $REGION $PROJECT_ID
-      - export GOOGLE_APPLICATION_CREDENTIALS=$PWD/account.json
-      - export KUBECONFIG=kubeconfig.yaml
-      - kubectl delete --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
-    when:
-      condition:
-        all:
-          destroy: '"${{DESTROY}}" == "true"'
   apply_app:
     image: vfarcic/gke-helm-kubectl:308.0.0
     title: Applying apps
@@ -62,7 +48,7 @@ steps:
       - export GOOGLE_APPLICATION_CREDENTIALS=$PWD/account.json
       - export KUBECONFIG=kubeconfig.yaml
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml
-      - sleep 5
+      - sleep 10
       - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 1.6.2 --values argocd-values.yaml --wait
     when:
       condition:
