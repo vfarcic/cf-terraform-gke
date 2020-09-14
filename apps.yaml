@@ -55,7 +55,7 @@ metadata:
 spec:
   project: production
   source:
-    repoURL: https://github.com/vfarcic/argocd-production.git
+    repoURL: https://github.com/vfarcic/cf-terraform-gke.git
     targetRevision: HEAD
     path: helm
   destination:
