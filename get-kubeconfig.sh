@@ -21,5 +21,5 @@ echo "Execute the following commands to use the newly created Kube config:"
 echo
 echo "export GOOGLE_APPLICATION_CREDENTIALS=account.json"
 echo 
-echo "export KUBECONFIG=kubeconfig.yaml"
+echo "export KUBECONFIG=$PWD/kubeconfig.yaml"
 
