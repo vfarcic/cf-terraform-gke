@@ -1,3 +1,5 @@
+set -e
+
 if [ "$1" == "" ]; then
   echo "Usage: $0 [CLUSTER_NAME] [REGION] [PROJECT_ID]"
   exit
