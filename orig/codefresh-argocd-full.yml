@@ -49,7 +49,7 @@ steps:
       - export KUBECONFIG=kubeconfig.yaml
       - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.35.0/deploy/static/provider/cloud/deploy.yaml
       - kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=120s
-      - while [[ "$INGRESS_HOST" = "" ]]; do export INGRESS_HOST=$(kubectl --namespace ingress-nginx get svc ingress-nginx-controller --output jsonpath="{.status.loadBalancer.ingress[0].ip}") && sleep 1; done
+      - chmod +x get-lb-ip.sh && export INGRESS_HOST=$(./get-lb-ip.sh)
       - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 2.8.0 --values argocd-values.yaml --set server.ingress.hosts="{argocd.$INGRESS_HOST.xip.io}" --wait
     when:
       condition:
