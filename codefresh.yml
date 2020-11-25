@@ -2,6 +2,7 @@ version: "1.0"
 stages:
   - prepare
   - apply
+  - apps
 steps:
   main_clone:
     title: Cloning repository
@@ -21,11 +22,6 @@ steps:
     stage: apply
     commands:
       - terraform init
-  plan:
-    image: hashicorp/terraform:0.13.0
-    title: Outputting Terraform plan
-    stage: apply
-    commands:
       - terraform plan
   apply:
     image: hashicorp/terraform:0.13.0
@@ -33,7 +29,33 @@ steps:
     stage: apply
     commands:
       - terraform apply -auto-approve 
+      - export CLUSTER_NAME=$(terraform output cluster_name)
+      - export PROJECT_ID=$(terraform output project_id)
+      - export REGION=$(terraform output region)
+      - export DESTROY=$(terraform output destroy)
+      - cf_export CLUSTER_NAME PROJECT_ID REGION DESTROY
     when:
       branch:
         only:
           - master
+  apply_app:
+    image: vfarcic/gke-helm-kubectl:308.0.0
+    title: Applying apps
+    stage: apps
+    commands:
+      - gcloud auth activate-service-account --key-file account.json
+      - chmod +x get-kubeconfig.sh && ./get-kubeconfig.sh $CLUSTER_NAME $REGION $PROJECT_ID
+      - export GOOGLE_APPLICATION_CREDENTIALS=$PWD/account.json
+      - export KUBECONFIG=kubeconfig.yaml
+      - kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.35.0/deploy/static/provider/cloud/deploy.yaml
+      - kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=120s
+      - chmod +x get-lb-ip.sh && export INGRESS_HOST=$(./get-lb-ip.sh)
+      - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 2.8.0 --values argocd-values.yaml --set server.ingress.hosts="{argocd.$INGRESS_HOST.xip.io}" --wait
+    when:
+      condition:
+        all:
+          notDestroy: '"${{DESTROY}}" == "false"'
+      branch:
+        only:
+          - master
+
