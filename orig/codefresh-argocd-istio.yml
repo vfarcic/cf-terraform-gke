@@ -62,7 +62,7 @@ steps:
           - master
   istio:
     image: istio/istioctl:1.6.14
-    title: Isntalling Istio
+    title: Installing Istio
     stage: apps
     commands:
     - istioctl install --skip-confirmation
