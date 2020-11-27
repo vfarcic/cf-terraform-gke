@@ -51,6 +51,7 @@ steps:
       - kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=120s
       - chmod +x get-lb-ip.sh && export INGRESS_HOST=$(./get-lb-ip.sh)
       - helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm --namespace argocd --create-namespace --version 2.8.0 --values argocd-values.yaml --set server.ingress.hosts="{argocd.$INGRESS_HOST.xip.io}" --wait
+      - cf_export KUBECONFIG
     when:
       condition:
         all:
