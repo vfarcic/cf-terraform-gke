@@ -60,7 +60,7 @@ steps:
         only:
           - master
   # istio:
-  #   image: istio/istioctl:1.6.14
+  #   image: istio/istioctl:1.7.5
   #   title: Installing Istio
   #   stage: apps
   #   commands:
