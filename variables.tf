@@ -1,11 +1,11 @@
 variable "region" {
   type    = string
-  default = "us-east1"
+  default = "europe-west1"
 }
 
 variable "project_id" {
   type    = string
-  default = "doc-20200910120159"
+  default = "doc-20210122235631"
 }
 
 variable "cluster_name" {
@@ -40,12 +40,10 @@ variable "billing_account_id" {
 
 variable "k8s_version" {
   type    = string
-  default = "1.17.15-gke.800"
+  default = "1.18.14-gke.1200"
 }
 
 variable "destroy" {
   type    = bool
-  default = true
+  default = false
 }
-
-
