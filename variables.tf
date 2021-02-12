@@ -45,5 +45,5 @@ variable "k8s_version" {
 
 variable "destroy" {
   type    = bool
-  default = true
+  default = false
 }
